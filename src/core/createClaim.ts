@@ -1,4 +1,4 @@
-import {  Claim } from "@/types";
+import { Claim } from "@/types";
 import { getUserDataById } from "./getUserDataById";
 export async function createClaim(
   userId: string,
@@ -9,6 +9,8 @@ export async function createClaim(
   if (error || !user) {
     return [null, error];
   }
+
+  console.log("Creating claim for user", user.id, "with data", claimData);
   const newClaim: Claim = {
     id: new Date().getTime().toString(),
     userId: user.id,

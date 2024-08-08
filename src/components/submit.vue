@@ -1,14 +1,22 @@
 <script lang="ts">
 import Vue from "vue";
+
 export default Vue.extend({
   name: "SubmitComponent",
+  props: {
+    text: {
+      type: String,
+      required: true,
+    },
+  },
   methods: {
-    submit() {
-      // TODO: Trigger form submission using Vuex
+    handleClick() {
+      this.$emit("submit");
     },
   },
 });
 </script>
+
 <template>
-  <b-button @click="submit">Submit</b-button>
+  <b-button type="submit" @click="handleClick">{{ text }}</b-button>
 </template>

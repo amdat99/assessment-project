@@ -1,22 +1,46 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 import FormView from "@/views/FormView.vue";
+import AddressFormView from "@/views/AddressFormView.vue";
+import ErrorView from "@/views/ErrorView.vue";
+import store from "@/store";
+
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
   {
     path: "/:userId",
     name: "form",
-    component: FormView,
-    beforeEnter: (to, from, next) => {
-      // TODO load the user data from getUserDataById and store it with VueX
-      next();
+    component: AddressFormView,
+    beforeEnter: async (to, from, next) => {
+      const userId = to.params.userId;
+      if (isNaN(Number(userId))) {
+        return next({
+          name: "error",
+          params: { errorMessage: "Invalid user ID" },
+        });
+      }
+      try {
+        await store.dispatch("fetchUserData", userId);
+        next();
+      } catch (error) {
+        next({
+          name: "error",
+          params: { errorMessage: "Failed to fetch user data" },
+        });
+      }
     },
   },
   {
     path: "/",
     name: "form",
     component: FormView,
+  },
+  {
+    path: "/error",
+    name: "error",
+    component: ErrorView,
+    props: (route) => ({ errorMessage: route.params.errorMessage }),
   },
 ];
 
