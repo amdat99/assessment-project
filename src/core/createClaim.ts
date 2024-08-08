@@ -10,7 +10,6 @@ export async function createClaim(
     return [null, error];
   }
 
-  console.log("Creating claim for user", user.id, "with data", claimData);
   const newClaim: Claim = {
     id: new Date().getTime().toString(),
     userId: user.id,

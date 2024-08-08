@@ -7,7 +7,7 @@ export async function getUserDataById(
   const user = userData.find((user) => user.id === id);
 
   if (!user) {
-    throw new Error("User not found");
+    return [null, new Error(`User with id ${id} not found`)];
   }
 
   return [user, null];

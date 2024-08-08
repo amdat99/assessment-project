@@ -2,7 +2,6 @@
 import Vue from "vue";
 import { BForm } from "bootstrap-vue";
 import TextComponent from "@/components/Text.vue";
-import { fetchPostcodes } from "@/core/fetchPostcodes";
 import { FormFields } from "@/types";
 
 export default Vue.extend({
@@ -31,6 +30,11 @@ export default Vue.extend({
       required: false,
       default: "",
     },
+    submissionSuccess: {
+      type: String,
+      required: false,
+      default: "",
+    },
   },
   methods: {
     validateForm(): boolean {
@@ -45,7 +49,7 @@ export default Vue.extend({
       return isValid;
     },
 
-    validateFields(formObject: Record<string, any>): Record<string, string> {
+    validateFields(formObject: Record<string, string>): Record<string, string> {
       const errors: Record<string, string> = {};
 
       this.formFields.forEach((field) => {
@@ -57,21 +61,9 @@ export default Vue.extend({
       return errors;
     },
 
-    cleanData(): Record<string, string>[] {
-      return this.formArray.map((formObject) => {
-        const cleanedObject: Record<string, string> = {};
-        this.formFields.forEach((field) => {
-          cleanedObject[field.name] = formObject[field.name];
-        });
-        return cleanedObject;
-      });
-    },
-
     onFormSubmit() {
       if (!this.validateForm()) return;
-      // Clean data to remove any extra properties
-      const cleanedData = this.cleanData();
-      this.$emit("submit", cleanedData);
+      this.$emit("submit");
     },
   },
 });
@@ -100,6 +92,12 @@ export default Vue.extend({
         type="h6"
         :text="submissionError"
         classes="text-danger mt-2"
+      />
+      <TextComponent
+        v-if="submissionSuccess && !submissionError"
+        type="h4"
+        :text="submissionSuccess"
+        classes="text-success mt-2"
       />
       <div class="col-12 text-center">
         <slot name="submit"></slot>

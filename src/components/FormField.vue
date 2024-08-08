@@ -1,7 +1,12 @@
 <script lang="ts">
 import Vue from "vue";
-import { BFormGroup, BFormInput, BListGroup, BListGroupItem } from "bootstrap-vue";
-import { fetchPostcodes } from "@/core/fetchPostcodes";
+import {
+  BFormGroup,
+  BFormInput,
+  BListGroup,
+  BListGroupItem,
+} from "bootstrap-vue";
+import { getPostcodes } from "@/core/getPostcodes";
 import { FormFields } from "@/types";
 
 export default Vue.extend({
@@ -52,10 +57,16 @@ export default Vue.extend({
       this.$emit("update-error", error);
     },
     async fetchPostcodeSuggestions() {
-      if (this.localValue.length >= 3) {
+      if (this.field.type === "postcode" && this.localValue.length >= 3) {
         try {
-          const postcodes = await fetchPostcodes(this.localValue);
-          this.suggestions = postcodes;
+          const postcodes = await getPostcodes(this.localValue);
+          if (!postcodes[0] || postcodes[1]) {
+            return this.$emit(
+              "update-error",
+              "Failed to fetch postcode suggestions."
+            );
+          }
+          this.suggestions = postcodes[0];
         } catch (error) {
           this.$emit("update-error", "Failed to fetch postcode suggestions.");
         }
@@ -63,15 +74,18 @@ export default Vue.extend({
     },
     selectSuggestion(suggestion: string) {
       this.localValue = suggestion;
-      this.suggestions = []; 
-      // this.$emit("input", suggestion); 
+      this.suggestions = [];
     },
   },
 });
 </script>
 
 <template>
-  <b-form-group :label="field.label" class="mb-2" :state="errorMessage ? false : null">
+  <b-form-group
+    :label="field.label"
+    class="mb-2"
+    :state="errorMessage ? false : null"
+  >
     <b-form-input
       v-if="field.type === 'input' || field.type === 'postcode'"
       v-model="localValue"
@@ -81,15 +95,15 @@ export default Vue.extend({
       :label="field.label"
       :placeholder="field.placeholder"
       :type="field.subType || 'text'"
-      :max="field.subType === 'date' ? field.maxDate : undefined"
+      :max="field.max || null"
       :required="field.required"
     />
     <b-list-group v-if="field.type === 'postcode' && suggestions.length > 0">
-      <b-list-group-item 
-        v-for="suggestion in suggestions" 
-        :key="suggestion" 
+      <b-list-group-item
+        v-for="suggestion in suggestions"
+        :key="suggestion"
         @click="selectSuggestion(suggestion)"
-        style="cursor: pointer;"
+        style="cursor: pointer"
       >
         {{ suggestion }}
       </b-list-group-item>

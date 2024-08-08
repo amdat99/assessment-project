@@ -34,7 +34,7 @@ export default new Vuex.Store({
         throw error;
       }
     },
-    async onCreateClaim({ commit, state }, addressData: Address) {
+    async onCreateClaim({ commit, state }, addressData: Address[]) {
       try {
         if (!state.userData) throw new Error("User data not found");
 
@@ -49,7 +49,9 @@ export default new Vuex.Store({
         );
         if (error || !newClaim) throw error;
 
-        commit("ADD_CLAIM", newClaim);
+        const finalClaim = JSON.parse(JSON.stringify(newClaim));
+
+        commit("ADD_CLAIM", finalClaim);
       } catch (error) {
         console.error("Failed to create claim", error);
         throw error;

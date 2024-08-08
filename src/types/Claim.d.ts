@@ -1,4 +1,5 @@
 import { User } from "./User";
+import { Address } from "./Address";
 
 export interface Claim {
   id: string;
@@ -7,6 +8,6 @@ export interface Claim {
   createdDate: string;
   updatedDate: string;
   creationIpAddress;
-  data: Record<string, any>;
+  data: Address[];
   userData: User;
 }

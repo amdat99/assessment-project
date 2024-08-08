@@ -1,11 +1,12 @@
 export interface FormFields {
   type: string;
   label: string;
+  name: string;
   placeholder?: string;
   value?: string;
   suggestions?: string[];
   error?: string;
-  maxDate?: string;
+  max?: string;
   required?: boolean;
-  name: string;
+  subType?: string;
 }
