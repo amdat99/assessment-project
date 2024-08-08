@@ -1,3 +1,9 @@
+<script lang="ts">
+import Vue from "vue";
+export default Vue.extend({
+  name: "App",
+});
+</script>
 <template>
   <div
     id="app"
@@ -10,14 +16,6 @@
     </div>
   </div>
 </template>
-
-<script lang="ts">
-import Vue from "vue";
-export default Vue.extend({
-  name: "App",
-});
-</script>
-
 <style scoped>
 .container-fluid {
   min-height: 100vh;
