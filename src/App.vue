@@ -4,6 +4,7 @@ export default Vue.extend({
   name: "App",
 });
 </script>
+
 <template>
   <div
     id="app"
@@ -16,6 +17,7 @@ export default Vue.extend({
     </div>
   </div>
 </template>
+
 <style scoped>
 .container-fluid {
   min-height: 100vh;

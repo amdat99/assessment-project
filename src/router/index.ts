@@ -12,7 +12,7 @@ const routes: Array<RouteConfig> = [
     path: "/:userId",
     name: "form",
     component: AddressFormView,
-    beforeEnter: async (to, from, next) => {
+    beforeEnter: async (to, _from, next) => {
       const userId = to.params.userId;
       if (isNaN(Number(userId))) {
         return next({

@@ -1,10 +1,10 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapGetters } from "vuex";
-import FormComponent from "@/components/Form.vue";
+import FormComponent from "@/components/form.vue";
 import FormField from "@/components/FormField.vue";
-import TextComponent from "@/components/Text.vue";
-import SubmitComponent from "@/components/Submit.vue";
+import TextComponent from "@/components/text.vue";
+import SubmitComponent from "@/components/submit.vue";
 import store from "@/store";
 import { Address, User, FormFields } from "@/types";
 

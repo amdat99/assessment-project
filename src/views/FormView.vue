@@ -1,8 +1,8 @@
 <script lang="ts">
 import Vue from "vue";
-import FormComponent from "@/components/Form.vue";
-import TextComponent from "@/components/Text.vue";
-import SubmitComponent from "@/components/Submit.vue";
+import FormComponent from "@/components/form.vue";
+import TextComponent from "@/components/text.vue";
+import SubmitComponent from "@/components/submit.vue";
 
 export default Vue.extend({
   name: "FormView",

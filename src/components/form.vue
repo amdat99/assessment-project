@@ -1,7 +1,7 @@
 <script lang="ts">
 import Vue from "vue";
 import { BForm } from "bootstrap-vue";
-import TextComponent from "@/components/Text.vue";
+import TextComponent from "@/components/text.vue";
 import { FormFields } from "@/types";
 
 export default Vue.extend({
